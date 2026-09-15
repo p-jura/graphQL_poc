@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graphql_poc/app/config.dart' show Config;
+import 'package:flutter_graphql_poc/features/characters/presentation/widgets/portal_header.dart';
 
 class CharactersPage extends StatelessWidget {
   const CharactersPage({super.key});
 
-  static final String _pageTitle = "CharactersPage";
+  static final String _pageTitle = "Characters";
+  static final String _pageSubtitle = "Who are you looking for?";
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_pageTitle, style: theme.textTheme.titleMedium),
-        actions: [
-          ElevatedButton(
-            onPressed: () {},
-            child: Text("data", style: theme.textTheme.labelMedium),
+      body: SafeArea(
+        child: Padding(
+          padding: Config.generalPageHorizontalPadding,
+          child: Column(
+            children: [
+              PortalHeader(
+                eyebrow: "eyebrow",
+                subtitle: _pageSubtitle,
+                title: _pageTitle,
+              ),
+              SizedBox(child: Center(child: Text("DATA"))),
+            ],
           ),
-          const SizedBox(width: 10),
-        ],
+        ),
       ),
-      body: Container(child: Center(child: Text("DATA"))),
     );
   }
 }
