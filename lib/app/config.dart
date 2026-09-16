@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class Config {
+abstract final class Config {
   static const generalPageHorizontalPadding = EdgeInsets.symmetric(
     horizontal: 30,
   );

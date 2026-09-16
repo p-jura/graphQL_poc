@@ -1,7 +1,9 @@
 import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-abstract class HiveService {
+class HiveService {
+  const HiveService._();
+
   static Future<void> initialize({
     Iterable<TypeAdapter<dynamic>> adapters = const [],
   }) async {
