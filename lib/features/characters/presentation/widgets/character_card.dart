@@ -2,67 +2,82 @@ import 'package:flutter/material.dart';
 import 'package:flutter_graphql_poc/features/characters/presentation/models/character_model.dart';
 
 class CharacterCard extends StatelessWidget {
-  const CharacterCard({super.key, required this.model});
-
-  final CharacterModel model;
+  const CharacterCard({super.key, required this.character});
+  final CharacterModel character;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    final statusColor = character.status == 'Alive'
+        ? colorScheme.inversePrimary
+        : character.status == 'Dead'
+        ? colorScheme.secondary
+        : colorScheme.error;
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        leading: AspectRatio(
-          aspectRatio: 1,
-          child: Image.network(
-            model.imageUrl.toString(),
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) =>
-                const Icon(Icons.broken_image_outlined),
-          ),
+      child: InkWell(
+        onTap: () {},
+        child: Row(
+          children: [
+            AspectRatio(
+              aspectRatio: 1,
+              child: Image.network(
+                character.imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => ColoredBox(
+                  color: colorScheme.surfaceContainerHigh,
+                  child: Icon(Icons.person_rounded, size: 52),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      character.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: statusColor,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        const SizedBox(width: 7),
+                        Expanded(
+                          child: Text(
+                            '${character.status} · ${character.species}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Icon(
+                Icons.chevron_right_rounded,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+          ],
         ),
-        title: Text(model.name),
-        subtitle: Text('${model.species} · ${model.status}'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () {
-          // Nawigacja z typowanym argumentem/id.
-        },
       ),
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   final theme = Theme.of(context);
-
-  //   return Card(
-  //     shape: BeveledRectangleBorder(),
-  //     child: Stack(
-  //       children: [
-  //         ClipRRect(
-  //           borderRadius: BorderRadiusGeometry.circular(10),
-  //           child: Image.network(
-  //             model.image,
-  //             alignment: AlignmentGeometry.center,
-  //             fit: BoxFit.fill,
-  //           ),
-  //         ),
-  //         SizedBox(
-  //           child: Column(
-  //             children: [
-  //               Text(model.name, style: theme.textTheme.bodyLarge),
-  //               Text(
-  //                 model.species,
-  //                 style: theme.textTheme.bodySmall?.copyWith(
-  //                   color: theme.colorScheme.onSurfaceVariant,
-  //                 ),
-  //               ),
-  //               Text(model.status, style: theme.textTheme.bodyMedium),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

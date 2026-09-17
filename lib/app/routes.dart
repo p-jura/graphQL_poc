@@ -9,8 +9,25 @@ abstract final class AppRoutes {
 
   static const initial = startPage;
 
-  static Map<String, WidgetBuilder> get routes => {
-    startPage: (_) => const StartPage(),
-    charactersDetails: (_) => const CharacterDetailPage(),
-  };
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case startPage:
+        return MaterialPageRoute(builder: (_) => const StartPage());
+
+      case charactersDetails:
+        // Pobieramy argumenty i rzutujemy je na potrzebny typ (np. String lub Twój obiekt)
+        final characterId = settings.arguments as int;
+
+        return MaterialPageRoute(
+          builder: (_) => CharacterDetailPage(id: characterId),
+        );
+
+      default:
+        // Obsługa nieznanej ścieżki
+        return MaterialPageRoute(
+          builder: (_) =>
+              const Scaffold(body: Center(child: Text('Page not found'))),
+        );
+    }
+  }
 }

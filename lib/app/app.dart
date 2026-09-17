@@ -16,7 +16,7 @@ class App extends StatelessWidget {
       client: client,
       child: MaterialApp(
         theme: AppTheme.darkTheme,
-        routes: AppRoutes.routes,
+        onGenerateRoute: AppRoutes.onGenerateRoute,
         initialRoute: AppRoutes.initial,
       ),
     );
