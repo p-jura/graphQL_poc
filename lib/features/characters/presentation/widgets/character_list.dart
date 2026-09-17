@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_graphql_poc/core/graphql/graphql_query.dart';
+import 'package:flutter_graphql_poc/core/core.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class CharacterList extends StatelessWidget {

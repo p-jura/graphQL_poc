@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_graphql_poc/app/routes.dart';
 import 'package:flutter_graphql_poc/app/theme.dart';
-import 'package:flutter_graphql_poc/core/graphql/graphql_service.dart';
+import 'package:flutter_graphql_poc/core/core.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class App extends StatelessWidget {
