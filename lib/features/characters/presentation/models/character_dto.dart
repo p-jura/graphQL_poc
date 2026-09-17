@@ -1,24 +1,26 @@
 import 'package:flutter_graphql_poc/features/characters/presentation/models/character_model.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 class CharacterDto {
+  const CharacterDto({required this.models, this.nextPage});
+
   final List<CharacterModel> models;
+  final int? nextPage;
 
-  const CharacterDto._({required this.models});
-
-  factory CharacterDto.fromQuery(QueryResult query) {
-    final characters = query.data?['characters']?['results'];
-
-    if (characters == null || characters is! List) {
-      throw TypeError();
+  factory CharacterDto.fromJson(Map<String, dynamic> json) {
+    final rawResults = json['results'];
+    if (rawResults is! List) {
+      throw const FormatException('Missing characters.results list');
     }
 
-    final result = <CharacterModel>[];
+    final rawInfo = json['info'];
+    final info = rawInfo is Map<String, dynamic> ? rawInfo : null;
 
-    for (var character in characters) {
-      result.add(CharacterModel.fromJson(character));
-    }
-
-    return CharacterDto._(models: result);
+    return CharacterDto(
+      models: rawResults
+          .whereType<Map<String, dynamic>>()
+          .map(CharacterModel.fromJson)
+          .toList(growable: false),
+      nextPage: info?['next'] as int?,
+    );
   }
 }

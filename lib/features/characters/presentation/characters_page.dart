@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_graphql_poc/app/config.dart' show Config;
+import 'package:flutter_graphql_poc/features/characters/presentation/widgets/character_list.dart';
 import 'package:flutter_graphql_poc/features/characters/presentation/widgets/portal_header.dart';
 
 class CharactersPage extends StatelessWidget {
@@ -27,6 +28,7 @@ class CharactersPage extends StatelessWidget {
                 ],
               ),
             ),
+            CharacterList(),
           ],
         ),
       ),

@@ -1,15 +1,30 @@
 part of 'characters_cubit.dart';
 
-class CharacterState extends Equatable {
-  final List<CharacterModel>? characters;
+enum CharactersStatus { initial, loading, success, failure }
 
-  const CharacterState({required this.characters});
+final class CharactersState extends Equatable {
+  const CharactersState({
+    this.status = CharactersStatus.initial,
+    this.characters = const [],
+    this.errorMessage,
+  });
 
-  factory CharacterState.initial() => CharacterState(characters: null);
+  final CharactersStatus status;
+  final List<CharacterModel> characters;
+  final String? errorMessage;
 
-  CharacterState copyWith(List<CharacterModel>? characters) =>
-      CharacterState(characters: characters);
+  CharactersState copyWith({
+    CharactersStatus? status,
+    List<CharacterModel>? characters,
+    String? errorMessage,
+  }) {
+    return CharactersState(
+      status: status ?? this.status,
+      characters: characters ?? this.characters,
+      errorMessage: errorMessage,
+    );
+  }
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [status, characters, errorMessage];
 }

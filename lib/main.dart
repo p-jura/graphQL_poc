@@ -7,15 +7,11 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final String hiveBoxName = DateTime.now().microsecondsSinceEpoch.toString();
   await HiveService.initialize();
-  await HiveService.openBox(hiveBoxName);
-
   await GraphqlService.initialize(
-    hiveBoxName: hiveBoxName,
+    hiveBoxName: 'graphql_cache',
     httpLink: HttpLink('https://rickandmortyapi.com/graphql'),
   );
-
   await DependencyInjection.initialize();
 
   runApp(const App());

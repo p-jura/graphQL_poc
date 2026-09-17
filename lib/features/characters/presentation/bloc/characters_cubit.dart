@@ -6,15 +6,32 @@ import 'package:flutter_graphql_poc/features/characters/presentation/models/char
 
 part './characters_state.dart';
 
-class CharactersCubit extends Cubit<CharacterState> {
+class CharactersCubit extends Cubit<CharactersState> {
   final GetCharactersUseCase _getCharacterUseCase;
 
   CharactersCubit({required UseCase getCharacterUseCase})
     : _getCharacterUseCase = getCharacterUseCase as GetCharactersUseCase,
-      super(CharacterState.initial());
+      super(CharactersState());
 
-  void getCharacters([int? page]) async {
-    final result = await _getCharacterUseCase.call(page ?? 1);
-    emit(state.copyWith(result.models));
+  void getCharacters([int page = 1]) async {
+    emit(state.copyWith(status: CharactersStatus.loading));
+
+    try {
+      final result = await _getCharacterUseCase.call(page);
+
+      emit(
+        state.copyWith(
+          status: CharactersStatus.success,
+          characters: result.models,
+        ),
+      );
+    } on Exception catch (e) {
+      emit(
+        CharactersState(
+          status: CharactersStatus.failure,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
   }
 }
