@@ -1,16 +1,32 @@
-# flutter_graphql_poc
+# Flutter GraphQL POC
 
-A new Flutter project.
+A simple Flutter demo application that fetches character data from the public [Rick and Morty GraphQL API](https://rickandmortyapi.com/graphql).
 
-## Getting Started
+The project explores GraphQL integration using a layered architecture and state management.
 
-This project is a starting point for a Flutter application.
+## Technologies
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter and Dart
+- `graphql_flutter` — API communication and GraphQL caching
+- `flutter_bloc` — state management
+- `get_it` — dependency injection
+- `hive_ce` — local caching
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Getting started
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter pub get
+flutter run
+```
+
+The application uses the following endpoint:
+
+```text
+https://rickandmortyapi.com/graphql
+```
+
+## Current scope
+
+The project is currently a proof of concept. It includes the basic application structure, GraphQL client configuration, a characters screen, navigation, and an initial Cubit-based data flow.
+
+The project is still a work in progress.
