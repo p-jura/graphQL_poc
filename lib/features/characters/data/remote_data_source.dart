@@ -1,5 +1,5 @@
 import 'package:flutter_graphql_poc/core/graphql/graphql_query.dart';
-import 'package:flutter_graphql_poc/features/characters/presentation/models/characters_dto.dart';
+import 'package:flutter_graphql_poc/features/characters/data/characters_dto.dart';
 import 'package:flutter_graphql_poc/features/characters/presentation/models/single_character_model.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -30,6 +30,8 @@ class GraphQLRemoteDataSource implements RemoteDataSource<int> {
 
     final rawCharacters = result.data?['characters'];
 
+    _validateData(rawCharacters);
+
     return CharactersDto.fromJson(rawCharacters);
   }
 
@@ -47,7 +49,16 @@ class GraphQLRemoteDataSource implements RemoteDataSource<int> {
     }
 
     final rawCharacter = result.data?['character'];
+
+    _validateData(rawCharacter);
+
     return SingleCharacterModel.fromJson(rawCharacter);
+  }
+
+  void _validateData(dynamic data) {
+    if (data is! Map<String, dynamic>) {
+      throw const FormatException('Mising characters object');
+    }
   }
 }
 

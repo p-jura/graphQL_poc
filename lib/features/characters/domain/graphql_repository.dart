@@ -1,5 +1,5 @@
 import 'package:flutter_graphql_poc/features/characters/data/remote_data_source.dart';
-import 'package:flutter_graphql_poc/features/characters/presentation/models/characters_dto.dart';
+import 'package:flutter_graphql_poc/features/characters/data/characters_dto.dart';
 import 'package:flutter_graphql_poc/features/characters/presentation/models/single_character_model.dart';
 
 abstract class GraphqlRepository<P> {

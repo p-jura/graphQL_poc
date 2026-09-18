@@ -22,7 +22,12 @@ class SingleCharacterCubit extends Cubit<SingleCharacterState> {
         state.copyWith(status: SingleCharacterStatus.loaded, character: result),
       );
     } on Exception catch (e) {
-      emit(state);
+      emit(
+        state.copyWith(
+          status: SingleCharacterStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 }

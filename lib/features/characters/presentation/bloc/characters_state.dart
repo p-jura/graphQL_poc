@@ -1,6 +1,13 @@
 part of 'characters_cubit.dart';
 
-enum CharactersStatus { initial, loading, success, failure }
+enum CharactersStatus {
+  initial,
+  loading,
+  success,
+  error;
+
+  bool get isError => this == CharactersStatus.error;
+}
 
 final class CharactersState extends Equatable {
   const CharactersState({

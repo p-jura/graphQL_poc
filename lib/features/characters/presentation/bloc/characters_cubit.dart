@@ -28,7 +28,7 @@ class CharactersCubit extends Cubit<CharactersState> {
     } on Exception catch (e) {
       emit(
         CharactersState(
-          status: CharactersStatus.failure,
+          status: CharactersStatus.error,
           errorMessage: e.toString(),
         ),
       );

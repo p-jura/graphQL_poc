@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graphql_poc/core/di/dependency_injection.dart';
+import 'package:flutter_graphql_poc/core/ui/empty_page.dart';
+import 'package:flutter_graphql_poc/core/ui/exception_widget.dart';
 import 'package:flutter_graphql_poc/features/characters/presentation/bloc/single_character_cubit.dart';
 import 'package:flutter_graphql_poc/features/characters/presentation/models/single_character_model.dart';
 
@@ -8,6 +10,13 @@ class CharacterDetailPage extends StatelessWidget {
   const CharacterDetailPage({super.key, required this.id});
 
   final int id;
+
+  void _showError(BuildContext context, String? message) {
+    showDialog(
+      context: context,
+      builder: (_) => Center(child: ExceptionWidget(message: message)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +26,22 @@ class CharacterDetailPage extends StatelessWidget {
       create: (context) =>
           getIt<SingleCharacterCubit>()..getSingleCharacter(id: id),
       child: Scaffold(
-        body: BlocBuilder<SingleCharacterCubit, SingleCharacterState>(
+        body: BlocConsumer<SingleCharacterCubit, SingleCharacterState>(
+          listener: (context, state) {
+            if (state.status.isError) {
+              _showError(context, state.errorMessage);
+            }
+          },
           builder: (context, state) {
             switch (state.status) {
               case SingleCharacterStatus.error:
-                // TODO: Handle this case.
-                throw UnimplementedError();
+                return EmptyPageView();
               case SingleCharacterStatus.initial:
+                return SliverFillRemaining(child: EmptyPageView());
               case SingleCharacterStatus.loading:
                 return CustomScrollView(
                   slivers: [
-                    SliverToBoxAdapter(
+                    SliverFillRemaining(
                       child: Center(
                         child: const SizedBox(
                           child: CircularProgressIndicator.adaptive(),
