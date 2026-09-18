@@ -1,17 +1,23 @@
 import 'package:flutter_graphql_poc/features/characters/data/remote_data_source.dart';
-import 'package:flutter_graphql_poc/features/characters/presentation/models/character_dto.dart';
+import 'package:flutter_graphql_poc/features/characters/presentation/models/characters_dto.dart';
+import 'package:flutter_graphql_poc/features/characters/presentation/models/single_character_model.dart';
 
-abstract class GraphqlRepository<T, P> {
-  T getCharacters({required P page});
+abstract class GraphqlRepository<P> {
+  Future<CharactersDto> getCharacters({required P page});
+  Future<SingleCharacterModel> getSingleCharacter({required P id});
 }
 
-class GraphqlRepositoryImpl
-    implements GraphqlRepository<Future<CharacterDto>, int> {
+class GraphqlRepositoryImpl implements GraphqlRepository<int> {
   final RemoteDataSource _dataSource;
 
   GraphqlRepositoryImpl(RemoteDataSource dataSource) : _dataSource = dataSource;
   @override
-  Future<CharacterDto> getCharacters({required int page}) async {
-    return await _dataSource.getCharacters(param: page);
+  Future<CharactersDto> getCharacters({required int page}) async {
+    return await _dataSource.getCharacters(page: page);
+  }
+
+  @override
+  Future<SingleCharacterModel> getSingleCharacter({required int id}) async {
+    return await _dataSource.getSingleCharacter(id: id);
   }
 }

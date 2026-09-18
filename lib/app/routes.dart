@@ -16,10 +16,10 @@ abstract final class AppRoutes {
 
       case charactersDetails:
         // Pobieramy argumenty i rzutujemy je na potrzebny typ (np. String lub Twój obiekt)
-        final characterId = settings.arguments as int;
+        final characterId = int.tryParse(settings.arguments as String);
 
         return MaterialPageRoute(
-          builder: (_) => CharacterDetailPage(id: characterId),
+          builder: (_) => CharacterDetailPage(id: characterId ?? 0),
         );
 
       default:

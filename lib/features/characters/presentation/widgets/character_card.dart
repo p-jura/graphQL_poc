@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graphql_poc/app/routes.dart';
 import 'package:flutter_graphql_poc/features/characters/presentation/models/character_model.dart';
 
 class CharacterCard extends StatelessWidget {
@@ -18,7 +19,11 @@ class CharacterCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(
+            context,
+          ).pushNamed(AppRoutes.charactersDetails, arguments: character.id);
+        },
         child: Row(
           children: [
             AspectRatio(

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graphql_poc/core/use_case/use_case.dart';
-import 'package:flutter_graphql_poc/features/characters/domain/get_characters_use_case.dart';
+import 'package:flutter_graphql_poc/features/characters/domain/use_cases/get_characters_use_case.dart';
 import 'package:flutter_graphql_poc/features/characters/presentation/models/character_model.dart';
 
 part './characters_state.dart';
@@ -14,7 +14,7 @@ class CharactersCubit extends Cubit<CharactersState> {
       super(CharactersState());
 
   void getCharacters([int page = 1]) async {
-    emit(state.copyWith(status: CharactersStatus.loading));
+    emit(CharactersState(status: CharactersStatus.loading));
 
     try {
       final result = await _getCharacterUseCase.call(page);
